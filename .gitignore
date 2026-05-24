@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+.env
+.env.*
+!.env.example
+
+.tools/
+qa/
+data/
+nexabridge-*.png
+*.log
+.DS_Store
+Thumbs.db

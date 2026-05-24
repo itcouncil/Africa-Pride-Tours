@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <rect width="1400" height="900" fill="#F7F1E8"/>
+  <defs>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#F4D68A"/>
+      <stop offset=".5" stop-color="#C6922F"/>
+      <stop offset="1" stop-color="#7E551E"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(110 90)">
+    <text x="0" y="0" fill="#6B4A2E" font-family="Arial" font-size="18" letter-spacing="5">CONCEPT 01</text>
+    <circle cx="130" cy="150" r="94" fill="#10100F"/>
+    <path d="M72 174c35-10 48-50 58-94 10 44 23 84 58 94" fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+    <text x="30" y="305" fill="#10100F" font-family="Georgia" font-size="36">Luxury PAJ Monogram</text>
+  </g>
+  <g transform="translate(780 90)">
+    <text x="0" y="0" fill="#6B4A2E" font-family="Arial" font-size="18" letter-spacing="5">CONCEPT 02</text>
+    <circle cx="130" cy="150" r="94" fill="#1F4D3A"/>
+    <path d="M54 176h152" stroke="#F4D68A" stroke-width="5"/>
+    <path d="M83 160c24-40 68-42 98 0" fill="none" stroke="#F4D68A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M132 118v58M104 135c20 6 36 6 56 0" stroke="#F7F1E8" stroke-width="5" stroke-linecap="round"/>
+    <text x="18" y="305" fill="#10100F" font-family="Georgia" font-size="36">Acacia Horizon Emblem</text>
+  </g>
+  <g transform="translate(110 520)">
+    <text x="0" y="0" fill="#6B4A2E" font-family="Arial" font-size="18" letter-spacing="5">CONCEPT 03</text>
+    <circle cx="130" cy="150" r="94" fill="#6B4A2E"/>
+    <circle cx="130" cy="108" r="33" fill="url(#gold)"/>
+    <path d="M78 190c32-58 72-58 104 0" fill="none" stroke="#F7F1E8" stroke-width="7" stroke-linecap="round"/>
+    <path d="M130 140c-18 22-24 44-18 70M130 140c18 22 24 44 18 70" stroke="#C6922F" stroke-width="5" stroke-linecap="round"/>
+    <text x="8" y="305" fill="#10100F" font-family="Georgia" font-size="36">Safari Sun Pathway</text>
+  </g>
+  <g transform="translate(780 520)">
+    <text x="0" y="0" fill="#6B4A2E" font-family="Arial" font-size="18" letter-spacing="5">CONCEPT 04</text>
+    <text x="0" y="128" fill="#10100F" font-family="Georgia" font-size="64" font-weight="700">Pride of Africa</text>
+    <text x="5" y="188" fill="#C6922F" font-family="Arial" font-size="24" letter-spacing="12">JOURNEYS</text>
+    <line x1="5" y1="222" x2="430" y2="222" stroke="#1F4D3A" stroke-width="3"/>
+    <text x="5" y="260" fill="#6B4A2E" font-family="Arial" font-size="18" letter-spacing="3">WHERE AFRICA BECOMES AN EXPERIENCE</text>
+  </g>
+</svg>

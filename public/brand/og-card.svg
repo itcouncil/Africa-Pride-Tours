@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#10100F"/>
+      <stop offset=".46" stop-color="#1F4D3A"/>
+      <stop offset="1" stop-color="#C6922F"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".72" cy=".34" r=".32">
+      <stop stop-color="#F4D68A"/>
+      <stop offset="1" stop-color="#C6922F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <rect width="1200" height="630" fill="url(#sun)" opacity=".9"/>
+  <path d="M0 470c170-90 250-40 388-88 180-62 262-168 420-120 116 35 188 128 392 58v310H0z" fill="#10100F" opacity=".72"/>
+  <path d="M120 432c150-40 226-110 318-250 92 140 168 210 318 250" fill="none" stroke="#F4D68A" stroke-width="18" stroke-linecap="round"/>
+  <text x="110" y="170" fill="#F7F1E8" font-family="Georgia, serif" font-size="72" font-weight="700">Pride of Africa</text>
+  <text x="116" y="232" fill="#C6922F" font-family="Arial, sans-serif" font-size="28" letter-spacing="12">JOURNEYS</text>
+  <text x="116" y="532" fill="#F7F1E8" font-family="Arial, sans-serif" font-size="30">Where Africa Becomes an Experience</text>
+</svg>

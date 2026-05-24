@@ -12,6 +12,7 @@ export function Navigation() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isAdmin = pathname?.startsWith("/admin");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -21,6 +22,10 @@ export function Navigation() {
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
+
+  if (isAdmin) {
+    return null;
+  }
 
   return (
     <>

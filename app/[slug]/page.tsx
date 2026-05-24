@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageExperience } from "@/components/PageExperience";
 import { pages } from "@/lib/content";
+import { readCmsState } from "@/lib/admin-store";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -17,9 +18,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!page) return {};
 
+  const cms = await readCmsState();
+  const override = cms.pages.find((item) => item.slug === slug);
+
   return {
-    title: page.seoTitle,
-    description: page.description,
+    title: override?.title || page.seoTitle,
+    description: override?.description || page.description,
     alternates: {
       canonical: `/${page.slug}`
     },
@@ -38,5 +42,15 @@ export default async function DynamicPage({ params }: PageProps) {
 
   if (!page) notFound();
 
-  return <PageExperience page={page} />;
+  const cms = await readCmsState();
+  const override = cms.pages.find((item) => item.slug === slug);
+  const mergedPage = {
+    ...page,
+    title: slug === "home" ? cms.hero.headline : override?.title || page.title,
+    description: slug === "home" ? cms.hero.subheadline : override?.description || page.description,
+    primaryCta: slug === "home" ? cms.hero.primaryCta : page.primaryCta,
+    secondaryCta: slug === "home" ? cms.hero.secondaryCta : page.secondaryCta
+  };
+
+  return <PageExperience page={mergedPage} />;
 }

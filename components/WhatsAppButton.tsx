@@ -1,7 +1,16 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { whatsappNumber } from "@/lib/content";
 
 export function WhatsAppButton() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <a
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hello Pride of Africa Journeys, I would like to plan a trip.")}`}

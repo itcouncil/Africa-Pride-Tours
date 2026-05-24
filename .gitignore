@@ -11,6 +11,7 @@ coverage/
 .tools/
 qa/
 data/
+public/uploads/
 nexabridge-*.png
 *.log
 .DS_Store

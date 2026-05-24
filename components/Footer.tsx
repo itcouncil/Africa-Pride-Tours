@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LogoLockup } from "@/components/Logo";
 import { navItems, services, whatsappNumber } from "@/lib/content";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <footer className="bg-[#10100f] px-6 py-16 text-white">
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr_0.7fr]">

@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { LoadingScreen } from "@/components/LoadingScreen";
+import { TravelChatBot } from "@/components/TravelChatBot";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://prideofafricajourneys.com"),
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Navigation />
         {children}
         <Footer />
+        <TravelChatBot />
         <WhatsAppButton />
       </body>
     </html>

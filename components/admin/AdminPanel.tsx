@@ -2,6 +2,7 @@
 
 import {
   BarChart3,
+  Bot,
   CalendarDays,
   CheckCircle2,
   ClipboardList,
@@ -26,7 +27,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { AdminCmsState, InquiryRecord, MediaAsset, OfferPost } from "@/lib/admin-schema";
 import { defaultCmsState, serviceOptions } from "@/lib/admin-schema";
 
-type Tab = "overview" | "operations" | "content" | "media" | "offers" | "inquiries";
+type Tab = "overview" | "operations" | "content" | "media" | "offers" | "knowledge" | "inquiries";
 
 const tabs: Array<{ id: Tab; label: string; icon: typeof LayoutDashboard }> = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -34,6 +35,7 @@ const tabs: Array<{ id: Tab; label: string; icon: typeof LayoutDashboard }> = [
   { id: "content", label: "Web Content", icon: Edit3 },
   { id: "media", label: "Media Library", icon: ImageIcon },
   { id: "offers", label: "Events & Offers", icon: Megaphone },
+  { id: "knowledge", label: "Chatbot KB", icon: Bot },
   { id: "inquiries", label: "Inquiries", icon: MessageSquareText }
 ];
 
@@ -135,6 +137,37 @@ export function AdminPanel() {
     setCms((current) => ({
       ...current,
       offers: current.offers.map((offer) => (offer.id === id ? { ...offer, [field]: value } : offer))
+    }));
+  }
+
+  function addKnowledgeEntry() {
+    setCms((current) => ({
+      ...current,
+      knowledgeBase: [
+        {
+          id: `kb-${Date.now().toString(36)}`,
+          question: "New client question",
+          answer: "Write the approved answer the chatbot should use for this topic.",
+          tags: ["travel"],
+          status: "Draft"
+        },
+        ...(current.knowledgeBase || [])
+      ]
+    }));
+    setActiveTab("knowledge");
+  }
+
+  function updateKnowledgeEntry(id: string, field: "question" | "answer" | "tags" | "status", value: string) {
+    setCms((current) => ({
+      ...current,
+      knowledgeBase: (current.knowledgeBase || []).map((entry) =>
+        entry.id === id
+          ? {
+              ...entry,
+              [field]: field === "tags" ? value.split(",").map((tag) => tag.trim()).filter(Boolean) : value
+            }
+          : entry
+      )
     }));
   }
 
@@ -244,6 +277,16 @@ export function AdminPanel() {
             <OffersEditor cms={cms} isSaving={isSaving} onAddOffer={addOffer} onOffer={updateOffer} onSave={() => saveCms()} />
           ) : null}
 
+          {activeTab === "knowledge" ? (
+            <KnowledgeEditor
+              cms={cms}
+              isSaving={isSaving}
+              onAdd={addKnowledgeEntry}
+              onKnowledge={updateKnowledgeEntry}
+              onSave={() => saveCms()}
+            />
+          ) : null}
+
           {activeTab === "inquiries" ? (
             <InquiriesTable inquiries={inquiries} />
           ) : null}
@@ -277,12 +320,13 @@ function Overview({
     { title: "Operations Pipeline", value: cms.operations.length, copy: "Active journeys needing planning, supplier, or guest actions.", icon: ClipboardList, tab: "operations" as Tab },
     { title: "Content Pages", value: cms.pages.length, copy: "Editable website page records with live/draft publishing status.", icon: FileText, tab: "content" as Tab },
     { title: "Media Assets", value: cms.media.length, copy: "Uploaded images and campaign files available to the web team.", icon: ImageIcon, tab: "media" as Tab },
-    { title: "Events & Offers", value: cms.offers.length, copy: "Promotional posts, seasonal deals, and event-led campaigns.", icon: Megaphone, tab: "offers" as Tab }
+    { title: "Events & Offers", value: cms.offers.length, copy: "Promotional posts, seasonal deals, and event-led campaigns.", icon: Megaphone, tab: "offers" as Tab },
+    { title: "Chatbot Knowledge", value: cms.knowledgeBase?.length || 0, copy: "Approved answers and topics used by the intelligent assistant.", icon: Bot, tab: "knowledge" as Tab }
   ];
 
   return (
     <div className="grid gap-6">
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-5">
         {cards.map((card) => {
           const Icon = card.icon;
           return (
@@ -549,6 +593,61 @@ function OffersEditor({
   );
 }
 
+function KnowledgeEditor({
+  cms,
+  isSaving,
+  onAdd,
+  onKnowledge,
+  onSave
+}: {
+  cms: AdminCmsState;
+  isSaving: boolean;
+  onAdd: () => void;
+  onKnowledge: (id: string, field: "question" | "answer" | "tags" | "status", value: string) => void;
+  onSave: () => void;
+}) {
+  return (
+    <Panel title="Chatbot Knowledge Base" icon={Bot}>
+      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <p className="max-w-2xl text-sm leading-7 text-[#71685c]">
+          These approved answers are retrieved by the travel assistant together with website pages, services, offers, reviews, and business policies.
+        </p>
+        <div className="flex gap-2">
+          <button type="button" onClick={onAdd} className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#10100f]">
+            <Plus size={17} /> Add Answer
+          </button>
+          <button type="button" onClick={onSave} className="inline-flex items-center gap-2 rounded-full bg-[#10100f] px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white">
+            <Save size={17} /> {isSaving ? "Saving..." : "Save KB"}
+          </button>
+        </div>
+      </div>
+
+      <div className="grid gap-4">
+        {(cms.knowledgeBase || []).map((entry) => (
+          <div key={entry.id} className="grid gap-4 rounded-[1.25rem] border border-[#e7dccd] bg-[#f7f1e8] p-4">
+            <div className="grid gap-4 md:grid-cols-[1fr_180px]">
+              <TextField label="Client Question / Topic" value={entry.question} onChange={(value) => onKnowledge(entry.id, "question", value)} />
+              <div className="grid gap-2">
+                <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#6b4a2e]">Status</span>
+                <select
+                  value={entry.status}
+                  onChange={(event) => onKnowledge(entry.id, "status", event.target.value)}
+                  className="rounded-2xl border border-[#e7dccd] bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-[#c6922f]"
+                >
+                  <option>Active</option>
+                  <option>Draft</option>
+                </select>
+              </div>
+            </div>
+            <TextAreaField label="Approved Answer" value={entry.answer} onChange={(value) => onKnowledge(entry.id, "answer", value)} />
+            <TextField label="Tags, comma separated" value={entry.tags.join(", ")} onChange={(value) => onKnowledge(entry.id, "tags", value)} />
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
 function InquiriesTable({ inquiries }: { inquiries: InquiryRecord[] }) {
   return (
     <Panel title="Lead & Inquiry Inbox" icon={UsersRound}>
@@ -605,6 +704,20 @@ function TextField({ label, value, onChange, type = "text" }: { label: string; v
         value={value}
         onChange={(event) => onChange(event.target.value)}
         className="rounded-2xl border border-[#e7dccd] bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-[#c6922f]"
+      />
+    </label>
+  );
+}
+
+function TextAreaField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+  return (
+    <label className="grid gap-2">
+      <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#6b4a2e]">{label}</span>
+      <textarea
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        rows={4}
+        className="resize-none rounded-2xl border border-[#e7dccd] bg-white px-4 py-3 text-sm font-semibold leading-7 outline-none focus:border-[#c6922f]"
       />
     </label>
   );

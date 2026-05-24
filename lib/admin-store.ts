@@ -22,7 +22,18 @@ export async function readCmsState(): Promise<AdminCmsState> {
 
   try {
     const content = await fs.readFile(cmsFile, "utf8");
-    return { ...defaultCmsState(), ...JSON.parse(content) };
+    const defaults = defaultCmsState();
+    const parsed = JSON.parse(content);
+    return {
+      ...defaults,
+      ...parsed,
+      hero: { ...defaults.hero, ...(parsed.hero || {}) },
+      pages: parsed.pages || defaults.pages,
+      offers: parsed.offers || defaults.offers,
+      media: parsed.media || defaults.media,
+      operations: parsed.operations || defaults.operations,
+      knowledgeBase: parsed.knowledgeBase || defaults.knowledgeBase
+    };
   } catch {
     const defaults = defaultCmsState();
     await writeCmsState(defaults);

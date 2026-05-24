@@ -13,6 +13,7 @@ Premium multipage African tours and travel platform for a Nairobi-based travel b
 - Luxury logo suite in `public/brand/logo-suite.svg`
 - SEO metadata, Open Graph card, robots, and sitemap
 - WhatsApp integration and inquiry API
+- Intelligent travel chatbot with knowledge-base retrieval and optional OpenAI Responses API reasoning
 - Local image fallbacks plus optimized remote travel imagery
 
 ## Routes
@@ -38,3 +39,14 @@ npm run build
 ```
 
 The build script uses Next.js webpack mode because the local Windows runtime blocks Turbopack worker spawning in this environment.
+
+## Chatbot Intelligence
+
+The chatbot works out of the box with the local Pride of Africa knowledge base. For model-powered reasoning in production, set:
+
+```text
+OPENAI_API_KEY=your_key
+OPENAI_MODEL=gpt-5-mini
+```
+
+Without `OPENAI_API_KEY`, the assistant still answers from the website pages, services, offers, testimonials, operations policy, and admin-managed chatbot knowledge base.

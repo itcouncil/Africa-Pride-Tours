@@ -44,6 +44,13 @@ export type AdminCmsState = {
     priority: "High" | "Medium" | "Low";
     value: string;
   }>;
+  knowledgeBase: Array<{
+    id: string;
+    question: string;
+    answer: string;
+    tags: string[];
+    status: "Active" | "Draft";
+  }>;
 };
 
 export type InquiryRecord = {
@@ -121,6 +128,40 @@ export function defaultCmsState(): AdminCmsState {
         owner: "Concierge",
         priority: "High",
         value: "$5,600"
+      }
+    ],
+    knowledgeBase: [
+      {
+        id: "kb-safari-cost",
+        question: "How much does a Kenya safari cost?",
+        answer:
+          "Safari pricing depends on season, park, lodge level, transport style, and group size. Pride of Africa Journeys positions around affordable luxury, so we can shape budget-aware lodge safaris, premium private safaris, honeymoon safaris, and group safari packages. The fastest way to quote accurately is to share dates, number of guests, preferred parks, and comfort level.",
+        tags: ["safari", "price", "cost", "budget", "quote"],
+        status: "Active"
+      },
+      {
+        id: "kb-airport-transfer",
+        question: "Do you provide Nairobi airport transfers?",
+        answer:
+          "Yes. We provide JKIA and Wilson Airport transfers with flight tracking, meet-and-greet coordination, hotel drop-offs, executive cars, group vans, safari connections, and WhatsApp support.",
+        tags: ["airport", "transfer", "jkia", "wilson", "nairobi"],
+        status: "Active"
+      },
+      {
+        id: "kb-payment-booking",
+        question: "How do I book a trip?",
+        answer:
+          "Start by sending your travel dates, destinations, group size, budget range, and must-have experiences. We clarify the route, prepare a proposal, confirm suppliers, then guide you through payment and guest support setup.",
+        tags: ["book", "booking", "payment", "confirm", "quote"],
+        status: "Active"
+      },
+      {
+        id: "kb-services",
+        question: "What services does Pride of Africa Journeys offer?",
+        answer:
+          "We offer safari packages, airport transfers, hotel booking, car hire, corporate travel, group tours, hiking adventures, beach holidays, and private tour guiding across Kenya and East Africa.",
+        tags: ["services", "safari", "hotel", "car hire", "corporate", "groups", "beach", "hiking"],
+        status: "Active"
       }
     ]
   };
